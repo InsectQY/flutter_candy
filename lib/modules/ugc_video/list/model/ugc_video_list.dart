@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_candy/utils/string_util.dart';
+
 class UGCVideoListModel {
   UGCVideoModel content;
 
@@ -129,6 +131,9 @@ class Action {
   int userBury;
   int userDigg;
   int userRepin;
+
+  String get playCountString => StringUtil.countString(playCount);
+  String get diggCountString => StringUtil.countString(diggCount);
 
   Action(
       {this.buryCount,

@@ -5,6 +5,7 @@ import 'package:flutter_candy/modules/mine/main/page/mine_page.dart';
 import 'package:flutter_candy/modules/ugc_video/list/page/ugc_video_page.dart';
 import 'package:flutter_candy/modules/video/main/page/video_list_page.dart';
 import 'package:flutter_candy/modules/video_hall/main/page/video_all_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class App extends StatefulWidget {
   App({Key key}) : super(key: key);
@@ -42,6 +43,9 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
+
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Container(
       child: Scaffold(
         body: PageView(
