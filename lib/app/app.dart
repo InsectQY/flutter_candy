@@ -3,7 +3,7 @@ import 'package:flutter_candy/app/item.dart';
 import 'package:flutter_candy/constant/color_constant.dart';
 import 'package:flutter_candy/modules/mine/main/page/mine_page.dart';
 import 'package:flutter_candy/modules/ugc_video/list/page/ugc_video_page.dart';
-import 'package:flutter_candy/modules/video/main/page/video_list_page.dart';
+import 'package:flutter_candy/modules/video/main/page/video_category.dart';
 import 'package:flutter_candy/modules/video_hall/main/page/video_all_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

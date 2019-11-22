@@ -1,14 +1,14 @@
 class UGCVideoPageData {
-  List<UGCCategory> data;
+  List<VideoCategory> data;
   String version;
 
   UGCVideoPageData({this.data, this.version});
 
   UGCVideoPageData.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<UGCCategory>();
+      data = new List<VideoCategory>();
       json['data'].forEach((v) {
-        data.add(new UGCCategory.fromJson(v));
+        data.add(new VideoCategory.fromJson(v));
       });
     }
     version = json['version'];
@@ -23,16 +23,16 @@ class UGCVideoPageData {
   }
 }
 
-class UGCCategory {
+class VideoCategory {
   String category;
   String name;
 
-  UGCCategory({
+  VideoCategory({
     this.category,
     this.name,
   });
 
-  UGCCategory.fromJson(Map<String, dynamic> json) {
+  VideoCategory.fromJson(Map<String, dynamic> json) {
     category = json['category'];
     name = json['name'];
   }
