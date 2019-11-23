@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_candy/modules/ugc_video/list/model/ugc_video_list.dart';
 import 'package:flutter_candy/modules/ugc_video/list/view_model/ugc_video_list_view_model.dart';
 import 'package:flutter_candy/provider/provider_widget.dart';
+import 'package:flutter_candy/widget/base_refresh.dart';
 import 'package:flutter_candy/widget/cache_image.dart';
 import 'package:flutter_candy/widget/icon_text.dart';
 
@@ -25,22 +26,25 @@ class _UGCVideoListPageState extends State<UGCVideoListPage>
     super.build(context);
     return ProviderWidget<UGCVideoListViewModel>(
       onModelReady: (viewModel) {
-        viewModel.request(category: widget.category);
+        viewModel.callRefresh();
       },
-      viewModel: UGCVideoListViewModel(),
+      viewModel: UGCVideoListViewModel(category: widget.category),
       builder: (context, viewModel, child) {
-        return GridView.builder(
-          itemCount: viewModel.items.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.6,
-              mainAxisSpacing: 0.5,
-              crossAxisSpacing: 0.5),
-          itemBuilder: (context, index) {
-            return UGCVideoListCell(
-              item: viewModel.items[index],
-            );
-          },
+        return BaseRefresh<UGCVideoListViewModel>(
+          viewModel: viewModel,
+          child: GridView.builder(
+            itemCount: viewModel.items.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.6,
+                mainAxisSpacing: 0.5,
+                crossAxisSpacing: 0.5),
+            itemBuilder: (context, index) {
+              return UGCVideoListCell(
+                item: viewModel.items[index],
+              );
+            },
+          ),
         );
       },
     );
@@ -54,7 +58,8 @@ class UGCVideoListCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: _tap,
       child: Stack(
         children: <Widget>[
           CachedImage(
@@ -94,5 +99,9 @@ class UGCVideoListCell extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _tap() {
+    debugPrint(item.content.rawData.title);
   }
 }

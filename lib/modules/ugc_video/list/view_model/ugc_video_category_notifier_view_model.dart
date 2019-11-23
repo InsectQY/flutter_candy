@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_candy/modules/ugc_video/list/model/ugc_category.dart';
 import 'package:flutter_candy/net/api/video_api.dart';
+import 'package:flutter_candy/provider/base_view_model.dart';
 
-class UGCVideoCategoryViewModel with ChangeNotifier {
+class UGCVideoCategoryViewModel extends BaseViewModel {
   List<VideoCategory> _categories = [];
 
   List<VideoCategory> get categories => _categories;
