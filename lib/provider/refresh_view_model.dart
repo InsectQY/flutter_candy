@@ -29,4 +29,17 @@ class RefreshViewModel extends BaseViewModel {
   }) {
     _refreshController.finishRefresh(success: success, noMore: noMore);
   }
+
+  finishLoad({
+    bool success,
+    bool noMore,
+  }) {
+    _refreshController.finishLoad(success: success, noMore: noMore);
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
 }

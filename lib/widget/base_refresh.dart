@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_candy/provider/refresh_view_model.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -8,6 +9,8 @@ class BaseRefresh<T extends RefreshViewModel> extends EasyRefresh {
   BaseRefresh(
       {@required this.viewModel,
       key,
+      bool enableControlFinishRefresh = false,
+      bool enableControlFinishLoad = false,
       bool taskIndependence = false,
       ScrollController scrollController,
       Header header,
@@ -35,6 +38,59 @@ class BaseRefresh<T extends RefreshViewModel> extends EasyRefresh {
             emptyWidget: emptyWidget,
             topBouncing: topBouncing,
             bottomBouncing: bottomBouncing,
-            enableControlFinishRefresh: true,
-            enableControlFinishLoad: true);
+            enableControlFinishRefresh: enableControlFinishRefresh,
+            enableControlFinishLoad: enableControlFinishLoad);
+
+  BaseRefresh.custom({
+    key,
+    @required this.viewModel,
+    bool enableControlFinishRefresh = false,
+    bool enableControlFinishLoad = false,
+    bool taskIndependence = false,
+    Header header,
+    int headerIndex,
+    Footer footer,
+    Axis scrollDirection = Axis.vertical,
+    bool reverse = false,
+    ScrollController scrollController,
+    bool primary,
+    bool shrinkWrap = false,
+    Key center,
+    double anchor = 0.0,
+    double cacheExtent,
+    int semanticChildCount,
+    DragStartBehavior dragStartBehavior = DragStartBehavior.start,
+    bool firstRefresh,
+    Widget firstRefreshWidget,
+    Widget emptyWidget,
+    bool topBouncing = true,
+    bool bottomBouncing = true,
+    @required List<Widget> slivers,
+  }) : super.custom(
+            key: key,
+            slivers: slivers,
+            controller: viewModel.refreshController,
+            onRefresh: viewModel.onRefresh,
+            onLoad: viewModel.onLoad,
+            taskIndependence: taskIndependence,
+            scrollController: scrollController,
+            header: header,
+            footer: footer,
+            firstRefresh: firstRefresh,
+            firstRefreshWidget: firstRefreshWidget,
+            headerIndex: headerIndex,
+            emptyWidget: emptyWidget,
+            topBouncing: topBouncing,
+            bottomBouncing: bottomBouncing,
+            primary: primary,
+            shrinkWrap: shrinkWrap,
+            center: center,
+            anchor: anchor,
+            cacheExtent: cacheExtent,
+            semanticChildCount: semanticChildCount,
+            dragStartBehavior: dragStartBehavior,
+            reverse: reverse,
+            scrollDirection: scrollDirection,
+            enableControlFinishRefresh: enableControlFinishRefresh,
+            enableControlFinishLoad: enableControlFinishLoad);
 }

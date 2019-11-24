@@ -19,14 +19,20 @@ class UGCVideoListViewModel extends RefreshViewModel {
     try {
       var response = await VideoApi.ugcList(category);
       _items = response;
-      refreshController.finishRefresh(success: true);
       notifyListeners();
     } catch (e) {
       debugPrint(e);
-      refreshController.finishRefresh(success: false);
     }
   }
 
   @override
-  get onLoad => null;
+  Future<void> onLoadCall() async {
+    try {
+      var response = await VideoApi.ugcList(category);
+      _items.addAll(response);
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e);
+    }
+  }
 }

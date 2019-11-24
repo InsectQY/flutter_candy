@@ -4,6 +4,7 @@ import 'package:flutter_candy/modules/ugc_video/list/view_model/ugc_video_list_v
 import 'package:flutter_candy/provider/provider_widget.dart';
 import 'package:flutter_candy/widget/base_refresh.dart';
 import 'package:flutter_candy/widget/cache_image.dart';
+import 'package:flutter_candy/widget/first_refresh_widget.dart';
 import 'package:flutter_candy/widget/icon_text.dart';
 
 class UGCVideoListPage extends StatefulWidget {
@@ -25,27 +26,26 @@ class _UGCVideoListPageState extends State<UGCVideoListPage>
   Widget build(BuildContext context) {
     super.build(context);
     return ProviderWidget<UGCVideoListViewModel>(
-      onModelReady: (viewModel) {
-        viewModel.callRefresh();
-      },
       viewModel: UGCVideoListViewModel(category: widget.category),
       builder: (context, viewModel, child) {
-        return BaseRefresh<UGCVideoListViewModel>(
-          viewModel: viewModel,
-          child: GridView.builder(
-            itemCount: viewModel.items.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.6,
-                mainAxisSpacing: 0.5,
-                crossAxisSpacing: 0.5),
-            itemBuilder: (context, index) {
-              return UGCVideoListCell(
-                item: viewModel.items[index],
-              );
-            },
-          ),
-        );
+        return BaseRefresh.custom(
+            viewModel: viewModel,
+            firstRefresh: true,
+            firstRefreshWidget: FirstRefresh(),
+            slivers: [
+              SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.6,
+                    mainAxisSpacing: 0.5,
+                    crossAxisSpacing: 0.5),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return UGCVideoListCell(
+                    item: viewModel.items[index],
+                  );
+                }, childCount: viewModel.items.length),
+              ),
+            ]);
       },
     );
   }
