@@ -22,7 +22,7 @@ class _AppState extends State<App> {
 
   final pageList = [
     VideoHallPage(),
-    VideoListPage(),
+    VideoCategoryPage(),
     UGCVideoPage(),
     MinePage()
   ];

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_candy/modules/ugc_video/list/model/ugc_category.dart';
 import 'package:flutter_candy/modules/ugc_video/list/model/ugc_video_list.dart';
+import 'package:flutter_candy/modules/video/list/model/news_list.dart';
 import 'package:flutter_candy/net/http/http.dart';
 
 class VideoApi {
@@ -24,6 +25,15 @@ class VideoApi {
     Response response = await ttHttp.get('video_api/get_category/v3/');
     return response.data
         .map<VideoCategory>((item) => VideoCategory.fromJson(item))
+        .toList();
+  }
+
+  /// 视频列表
+  static Future<List<NewsListModel>> videoList(String category) async {
+    Response response = await ttHttp
+        .get('api/news/feed/v64/', queryParameters: {'category': category});
+    return response.data
+        .map<NewsListModel>((item) => NewsListModel.fromJson(item))
         .toList();
   }
 }

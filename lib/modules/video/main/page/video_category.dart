@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_candy/constant/color_constant.dart';
-import 'package:flutter_candy/modules/video/main/view_model/video_list_view_model.dart';
+import 'package:flutter_candy/modules/video/list/page/video_list_page.dart';
+import 'package:flutter_candy/modules/video/main/view_model/video_category_view_model.dart';
 import 'package:flutter_candy/provider/provider_widget.dart';
 
-class VideoListPage extends StatefulWidget {
-  VideoListPage({Key key}) : super(key: key);
+class VideoCategoryPage extends StatefulWidget {
+  VideoCategoryPage({Key key}) : super(key: key);
 
   @override
-  _VideoListPageState createState() => _VideoListPageState();
+  _VideoCategoryPageState createState() => _VideoCategoryPageState();
 }
 
-class _VideoListPageState extends State<VideoListPage>
+class _VideoCategoryPageState extends State<VideoCategoryPage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   TabController _controller;
 
@@ -20,11 +21,11 @@ class _VideoListPageState extends State<VideoListPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ProviderWidget<VideoListViewModel>(
+    return ProviderWidget<VideoCategoryViewModel>(
       onModelReady: (viewModel) {
         viewModel.requestCategoty();
       },
-      viewModel: VideoListViewModel(),
+      viewModel: VideoCategoryViewModel(),
       builder: (context, viewModel, child) {
         _controller =
             TabController(length: viewModel.categories.length, vsync: this);
@@ -51,7 +52,9 @@ class _VideoListPageState extends State<VideoListPage>
                   child: TabBarView(
                     controller: _controller,
                     children: viewModel.categories
-                        .map((item) => Center(child: Text(item.category)))
+                        .map((item) => VideoListPage(
+                              categroy: item.category,
+                            ))
                         .toList(),
                   ),
                 ),
