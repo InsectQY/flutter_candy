@@ -2,6 +2,6 @@ import 'package:flutter/material.dart';
 
 class ColorConstant {
   static const Color main = Colors.redAccent;
-  static const Color tabBarNormal = Color.fromRGBO(138, 138, 138, 1);
+  static const Color tabBarNormal = Color(0xFF8A8A8A);
   static const Color nav = Colors.white;
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_candy/modules/ugc_video/list/model/ugc_video_list.dart';
+import 'package:flutter_candy/utils/string_util.dart';
 
 class NewsListModel {
   /// 单条新闻内容(返回数据为 JSON 字符串)
@@ -30,9 +31,6 @@ class NewsModel {
   int behotTime;
   int buryCount;
   int canCommentLevel;
-  int cellFlag;
-  int cellLayoutStyle;
-  int cellType;
   int commentCount;
   int composition;
   String contentDecoration;
@@ -45,9 +43,6 @@ class NewsModel {
   int groupFlags;
   int groupId;
   int groupSource;
-  bool hasM3u8Video;
-  int hasMp4Video;
-  bool hasVideo;
   int hot;
   int id;
   int ignoreWebTransform;
@@ -60,7 +55,7 @@ class NewsModel {
   int itemVersion;
   List<UrlList> largeImageList;
   int level;
-  MediaInfo mediaInfo;
+  MediaInfo userInfo;
   String mediaName;
   int needClientImprRecycle;
   String playAuthToken;
@@ -74,9 +69,6 @@ class NewsModel {
   int shareCount;
   int shareType;
   String shareUrl;
-  bool showDislike;
-  bool showPortrait;
-  bool showPortraitArticle;
   String source;
   int sourceIconStyle;
   String sourceOpenUrl;
@@ -88,13 +80,15 @@ class NewsModel {
   int userVerified;
   String verifiedContent;
   String verifyReason;
-  int verifyStatus;
   int videoDuration;
   String videoId;
   int videoLikeCount;
+  VideoDetailInfo videoDetailInfo;
   VideoPlayInfo videoPlayInfo;
   int videoStyle;
   int videoUserLike;
+
+  String get commentCountString => StringUtil.countString(commentCount);
 
   NewsModel(
       {this.digest,
@@ -111,9 +105,6 @@ class NewsModel {
       this.behotTime,
       this.buryCount,
       this.canCommentLevel,
-      this.cellFlag,
-      this.cellLayoutStyle,
-      this.cellType,
       this.commentCount,
       this.composition,
       this.contentDecoration,
@@ -126,9 +117,6 @@ class NewsModel {
       this.groupFlags,
       this.groupId,
       this.groupSource,
-      this.hasM3u8Video,
-      this.hasMp4Video,
-      this.hasVideo,
       this.hot,
       this.id,
       this.ignoreWebTransform,
@@ -141,7 +129,7 @@ class NewsModel {
       this.itemVersion,
       this.largeImageList,
       this.level,
-      this.mediaInfo,
+      this.userInfo,
       this.mediaName,
       this.needClientImprRecycle,
       this.playAuthToken,
@@ -155,9 +143,6 @@ class NewsModel {
       this.shareCount,
       this.shareType,
       this.shareUrl,
-      this.showDislike,
-      this.showPortrait,
-      this.showPortraitArticle,
       this.source,
       this.sourceIconStyle,
       this.sourceOpenUrl,
@@ -169,13 +154,13 @@ class NewsModel {
       this.userVerified,
       this.verifiedContent,
       this.verifyReason,
-      this.verifyStatus,
       this.videoDuration,
       this.videoId,
       this.videoLikeCount,
       this.videoPlayInfo,
       this.videoStyle,
-      this.videoUserLike});
+      this.videoUserLike,
+      this.videoDetailInfo});
 
   NewsModel.fromJson(Map<String, dynamic> tmpJSON) {
     digest = tmpJSON['abstract'];
@@ -192,9 +177,6 @@ class NewsModel {
     behotTime = tmpJSON['behot_time'];
     buryCount = tmpJSON['bury_count'];
     canCommentLevel = tmpJSON['can_comment_level'];
-    cellFlag = tmpJSON['cell_flag'];
-    cellLayoutStyle = tmpJSON['cell_layout_style'];
-    cellType = tmpJSON['cell_type'];
     commentCount = tmpJSON['comment_count'];
     composition = tmpJSON['composition'];
     contentDecoration = tmpJSON['content_decoration'];
@@ -207,9 +189,6 @@ class NewsModel {
     groupFlags = tmpJSON['group_flags'];
     groupId = tmpJSON['group_id'];
     groupSource = tmpJSON['group_source'];
-    hasM3u8Video = tmpJSON['has_m3u8_video'];
-    hasMp4Video = tmpJSON['has_mp4_video'];
-    hasVideo = tmpJSON['has_video'];
     hot = tmpJSON['hot'];
     id = tmpJSON['id'];
     ignoreWebTransform = tmpJSON['ignore_web_transform'];
@@ -221,8 +200,11 @@ class NewsModel {
     itemId = tmpJSON['item_id'];
     itemVersion = tmpJSON['item_version'];
     level = tmpJSON['level'];
-    mediaInfo = tmpJSON['media_info'] != null
-        ? new MediaInfo.fromJson(tmpJSON['media_info'])
+    videoDetailInfo = tmpJSON['video_detail_info'] != null
+        ? new VideoDetailInfo.fromJson(tmpJSON['video_detail_info'])
+        : null;
+    userInfo = tmpJSON['user_info'] != null
+        ? new MediaInfo.fromJson(tmpJSON['user_info'])
         : null;
     mediaName = tmpJSON['media_name'];
     needClientImprRecycle = tmpJSON['need_client_impr_recycle'];
@@ -237,9 +219,6 @@ class NewsModel {
     shareCount = tmpJSON['share_count'];
     shareType = tmpJSON['share_type'];
     shareUrl = tmpJSON['share_url'];
-    showDislike = tmpJSON['show_dislike'];
-    showPortrait = tmpJSON['show_portrait'];
-    showPortraitArticle = tmpJSON['show_portrait_article'];
     source = tmpJSON['source'];
     sourceIconStyle = tmpJSON['source_icon_style'];
     sourceOpenUrl = tmpJSON['source_open_url'];
@@ -251,7 +230,6 @@ class NewsModel {
     userVerified = tmpJSON['user_verified'];
     verifiedContent = tmpJSON['verified_content'];
     verifyReason = tmpJSON['verify_reason'];
-    verifyStatus = tmpJSON['verify_status'];
     videoDuration = tmpJSON['video_duration'];
     videoId = tmpJSON['video_id'];
     videoLikeCount = tmpJSON['video_like_count'];
@@ -282,9 +260,6 @@ class NewsModel {
     data['behot_time'] = this.behotTime;
     data['bury_count'] = this.buryCount;
     data['can_comment_level'] = this.canCommentLevel;
-    data['cell_flag'] = this.cellFlag;
-    data['cell_layout_style'] = this.cellLayoutStyle;
-    data['cell_type'] = this.cellType;
     data['comment_count'] = this.commentCount;
     data['composition'] = this.composition;
     data['content_decoration'] = this.contentDecoration;
@@ -297,9 +272,6 @@ class NewsModel {
     data['group_flags'] = this.groupFlags;
     data['group_id'] = this.groupId;
     data['group_source'] = this.groupSource;
-    data['has_m3u8_video'] = this.hasM3u8Video;
-    data['has_mp4_video'] = this.hasMp4Video;
-    data['has_video'] = this.hasVideo;
     data['hot'] = this.hot;
     data['id'] = this.id;
     data['ignore_web_transform'] = this.ignoreWebTransform;
@@ -311,8 +283,8 @@ class NewsModel {
     data['item_id'] = this.itemId;
     data['item_version'] = this.itemVersion;
     data['level'] = this.level;
-    if (this.mediaInfo != null) {
-      data['media_info'] = this.mediaInfo.toJson();
+    if (this.userInfo != null) {
+      data['user_info'] = this.userInfo.toJson();
     }
     data['media_name'] = this.mediaName;
     data['need_client_impr_recycle'] = this.needClientImprRecycle;
@@ -327,9 +299,6 @@ class NewsModel {
     data['share_count'] = this.shareCount;
     data['share_type'] = this.shareType;
     data['share_url'] = this.shareUrl;
-    data['show_dislike'] = this.showDislike;
-    data['show_portrait'] = this.showPortrait;
-    data['show_portrait_article'] = this.showPortraitArticle;
     data['source'] = this.source;
     data['source_icon_style'] = this.sourceIconStyle;
     data['source_open_url'] = this.sourceOpenUrl;
@@ -341,7 +310,6 @@ class NewsModel {
     data['user_verified'] = this.userVerified;
     data['verified_content'] = this.verifiedContent;
     data['verify_reason'] = this.verifyReason;
-    data['verify_status'] = this.verifyStatus;
     data['video_duration'] = this.videoDuration;
     data['video_id'] = this.videoId;
     data['video_like_count'] = this.videoLikeCount;
@@ -356,8 +324,6 @@ class MediaInfo {
   String avatarUrl;
   int mediaId;
   String name;
-  int subcribed;
-  int subscribed;
   int userId;
   bool userVerified;
   String verifiedContent;
@@ -366,8 +332,6 @@ class MediaInfo {
       {this.avatarUrl,
       this.mediaId,
       this.name,
-      this.subcribed,
-      this.subscribed,
       this.userId,
       this.userVerified,
       this.verifiedContent});
@@ -376,8 +340,6 @@ class MediaInfo {
     avatarUrl = json['avatar_url'];
     mediaId = json['media_id'];
     name = json['name'];
-    subcribed = json['subcribed'];
-    subscribed = json['subscribed'];
     userId = json['user_id'];
     userVerified = json['user_verified'];
     verifiedContent = json['verified_content'];
@@ -388,11 +350,58 @@ class MediaInfo {
     data['avatar_url'] = this.avatarUrl;
     data['media_id'] = this.mediaId;
     data['name'] = this.name;
-    data['subcribed'] = this.subcribed;
-    data['subscribed'] = this.subscribed;
     data['user_id'] = this.userId;
     data['user_verified'] = this.userVerified;
     data['verified_content'] = this.verifiedContent;
+    return data;
+  }
+}
+
+class LargeImageList {
+  double height;
+  String url;
+  double width;
+
+  LargeImageList({this.height, this.url, this.width});
+
+  LargeImageList.fromJson(Map<String, dynamic> json) {
+    height = json['height'].toDouble();
+    url = json['url'];
+    width = json['width'].toDouble();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['height'] = this.height;
+    data['url'] = this.url;
+    data['width'] = this.width;
+    return data;
+  }
+}
+
+class VideoDetailInfo {
+  LargeImageList detailVideoLargeImage;
+  String videoId;
+  int videoWatchCount;
+
+  String get videoWatchCountString =>
+      StringUtil.countString(videoWatchCount) ?? '';
+
+  VideoDetailInfo(
+      {this.detailVideoLargeImage, this.videoId, this.videoWatchCount});
+
+  VideoDetailInfo.fromJson(Map<String, dynamic> json) {
+    detailVideoLargeImage = json['detail_video_large_image'] != null
+        ? new LargeImageList.fromJson(json['detail_video_large_image'])
+        : null;
+    videoId = json['video_id'];
+    videoWatchCount = json['video_watch_count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['video_id'] = this.videoId;
+    data['video_watch_count'] = this.videoWatchCount;
     return data;
   }
 }
