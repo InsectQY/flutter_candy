@@ -15,6 +15,7 @@ class VideoApi {
   static Future<List<UGCVideoListModel>> ugcList(String category) async {
     Response response = await ttHttp
         .get('api/news/feed/v88/', queryParameters: {'category': category});
+
     return response.data
         .map<UGCVideoListModel>((item) => UGCVideoListModel.fromJson(item))
         .toList();
